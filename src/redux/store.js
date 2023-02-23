@@ -1,6 +1,7 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import persistedReducer from './root-reducer';
+import rootReducer from './tasks/cont-slice';
 
 import persistStore from 'redux-persist/es/persistStore';
 

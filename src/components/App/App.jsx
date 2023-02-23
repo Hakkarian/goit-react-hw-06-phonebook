@@ -8,8 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 import { getAllContacts, getFilteredContacts } from "redux/tasks/cont-selectors";
-import { filterSlice } from "redux/filters/filter-slice";
-import { contactsSlice } from "redux/tasks/cont-slice";
+import { rootSlice } from "redux/tasks/cont-slice";
 import { getFilter } from "redux/filters/filter-selectors";
 
 
@@ -50,12 +49,12 @@ const App = () => {
 
 
   const handleAddContact = ( name, number ) => {
-    dispatch(contactsSlice.actions.addContact({ name, number }));
+    dispatch(rootSlice.actions.addContact({ name, number }));
   }
 
   const handleDeleteContact = ( itemId ) => {
 
-    dispatch(contactsSlice.actions.deleteContact( itemId ));
+    dispatch(rootSlice.actions.deleteContact( itemId ));
   }
 
 
@@ -70,7 +69,7 @@ const App = () => {
 
     // const deletePayContact = (contactId) => setContacts(contacts.filter((contact) => contact.id !== contactId));
 
-  const handleFilterChange = (e) => dispatch(filterSlice.actions.settedFilter(e.target.value));
+  const handleFilterChange = (e) => dispatch(rootSlice.actions.settedFilter(e.target.value));
 
   const getVisibleContacts = e => {
 
@@ -94,7 +93,7 @@ const App = () => {
       <ContactForm onSubmit={handleAddContact} contacts={contactis} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
-       <ContactList contacts={filteredContactis} onDelete={handleDeleteContact} />
+       <ContactList contacts={visibleContacts} onDelete={handleDeleteContact} />
     </ContactFlexCss>
   );
 }
