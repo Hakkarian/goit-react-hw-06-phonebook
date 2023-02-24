@@ -13,50 +13,57 @@ import { getFilter } from "redux/filters/filter-selectors";
 
 
 const LS_KEY = "contacts";
-
-// const useLocalStorage = (key, value) => {
-//   const [state, setState] = useState(value);
-
-//   useEffect(() => {
-//     localStorage.setItem(key, JSON.stringify(value));
-//   }, [key, value])
-//   return [state, setState];
-// }
-
-
-    // { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    // { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    // { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    // { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
   
 
 const App = () => {
-  const filteredContactis = useSelector(
-    getFilteredContacts
-  );
+  const filteredContactis = useSelector(getFilteredContacts);
   const contactis = useSelector(getAllContacts);
-  const filter = useSelector(getFilter)
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-  console.log(contactis)
+  console.log(contactis);
+
+  const handleAddContact = (name, number) => {
+    dispatch(rootSlice.actions.addContact({ name, number }));
+  };
+
+  const handleDeleteContact = itemId => {
+    dispatch(rootSlice.actions.deleteContact(itemId));
+  };
+
+  const handleFilterChange = e =>
+    dispatch(rootSlice.actions.settedFilter(e.target.value));
+
+  return (
+    <ContactFlexCss>
+      <h1>Phonebook</h1>
+      <ContactForm onSubmit={handleAddContact} />
+      <h2>Contacts</h2>
+      <Filter onChange={handleFilterChange} />
+      <ContactList onDelete={handleDeleteContact} />
+    </ContactFlexCss>
+  );
+}
+
+  // const useLocalStorage = (key, value) => {
+  //   const [state, setState] = useState(value);
+
+  //   useEffect(() => {
+  //     localStorage.setItem(key, JSON.stringify(value));
+  //   }, [key, value])
+  //   return [state, setState];
+  // }
+
+  // { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
+  // { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
+  // { id: "id-3", name: "Eden Clements", number: "645-17-79" },
+  // { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
 
   // const [contacts, setContacts] = useState(() => {
   //   return JSON.parse(localStorage.getItem(LS_KEY)) || []
   // });
 
-
   // const [filter, setFilter] = useState("");
-
-
-  const handleAddContact = ( name, number ) => {
-    dispatch(rootSlice.actions.addContact({ name, number }));
-  }
-
-  const handleDeleteContact = ( itemId ) => {
-
-    dispatch(rootSlice.actions.deleteContact( itemId ));
-  }
-
 
   // const addContact = (name, number) => {
   //   const contact = {
@@ -67,36 +74,7 @@ const App = () => {
   //   setContacts([contact, ...contacts]);
   // };
 
-    // const deletePayContact = (contactId) => setContacts(contacts.filter((contact) => contact.id !== contactId));
-
-  const handleFilterChange = (e) => dispatch(rootSlice.actions.settedFilter(e.target.value));
-
-  const getVisibleContacts = e => {
-
-    const normalizedFilter = filter.toLowerCase();
-
-    
-
-    return contactis.filter(
-      (contact) => contact.name.toLowerCase() !== normalizedFilter ? contact.name.toLowerCase().includes(normalizedFilter) ||
-        contact.number.includes(normalizedFilter) : console.log("NO")
-    );
-  }
-
-  const visibleContacts = getVisibleContacts();
-  console.log(visibleContacts);
-
-
-  return (
-    <ContactFlexCss>
-      <h1>Phonebook</h1>
-      <ContactForm onSubmit={handleAddContact} contacts={contactis} />
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={handleFilterChange} />
-       <ContactList contacts={visibleContacts} onDelete={handleDeleteContact} />
-    </ContactFlexCss>
-  );
-}
+  // const deletePayContact = (contactId) => setContacts(contacts.filter((contact) => contact.id !== contactId));
 
 // class App extends Component {
 //   state = {

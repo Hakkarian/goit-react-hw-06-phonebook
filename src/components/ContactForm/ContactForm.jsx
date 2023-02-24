@@ -2,9 +2,12 @@ import { Component, useState } from "react";
 import PropTypes from 'prop-types';
 import { ContactFormCss, ContactLabelCss } from "./ContactForm.styled";
 import { ButtonCss } from "components/App/App.styled";
+import { useSelector } from "react-redux";
+import { getAllContacts } from "redux/tasks/cont-selectors";
 
 
-const ContactForm = ({contacts, onSubmit}) => {
+const ContactForm = ({ onSubmit }) => {
+  const contacts = useSelector(getAllContacts);
   const [ state, setState ] = useState({
     name: "",
     number: "",
@@ -130,13 +133,6 @@ const ContactForm = ({contacts, onSubmit}) => {
 // }
 
 ContactForm.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
   onSubmit: PropTypes.func.isRequired,
 };
 
