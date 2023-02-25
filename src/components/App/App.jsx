@@ -1,49 +1,25 @@
-import { Component, useEffect, useRef, useState } from "react";
-import { nanoid } from "nanoid";
 import ContactForm from "components/ContactForm";
 import ContactList from "components/ContactList";
 import Filter from "components/Filter";
 import { ContactFlexCss } from "./App.styled";
-import { useSelector, useDispatch } from "react-redux";
 
 
-import { getAllContacts, getFilteredContacts } from "redux/tasks/cont-selectors";
-import { rootSlice } from "redux/tasks/cont-slice";
-import { getFilter } from "redux/filters/filter-selectors";
-
-
-const LS_KEY = "contacts";
-  
 
 const App = () => {
-  const filteredContactis = useSelector(getFilteredContacts);
-  const contactis = useSelector(getAllContacts);
-  const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
-
-  console.log(contactis);
-
-  const handleAddContact = (name, number) => {
-    dispatch(rootSlice.actions.addContact({ name, number }));
-  };
-
-  const handleDeleteContact = itemId => {
-    dispatch(rootSlice.actions.deleteContact(itemId));
-  };
-
-  const handleFilterChange = e =>
-    dispatch(rootSlice.actions.settedFilter(e.target.value));
-
   return (
     <ContactFlexCss>
       <h1>Phonebook</h1>
-      <ContactForm onSubmit={handleAddContact} />
+      <ContactForm />
       <h2>Contacts</h2>
-      <Filter onChange={handleFilterChange} />
-      <ContactList onDelete={handleDeleteContact} />
+      <Filter />
+      <ContactList />
     </ContactFlexCss>
   );
-}
+};
+
+
+// const LS_KEY = "contacts";
+  
 
   // const useLocalStorage = (key, value) => {
   //   const [state, setState] = useState(value);

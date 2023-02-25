@@ -1,20 +1,25 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import { ContactFormCss, ContactLabelCss } from "./ContactForm.styled";
 import { ButtonCss } from "components/App/App.styled";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllContacts } from "redux/tasks/cont-selectors";
+import { rootSlice } from "redux/tasks/cont-slice";
 
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
   const contacts = useSelector(getAllContacts);
   const [ state, setState ] = useState({
     name: "",
     number: "",
   });
+  const dispatch = useDispatch();
+
+  const handleAddContact = (name, number) =>
+    dispatch(rootSlice.actions.addContact({ name, number }));
 
 
-  const handleInputChange = (e) => setState({...state ,[e.target.name]: e.target.value });
+  const handleInputChange = (e) => setState({ ...state, [e.target.name]: e.target.value });
       const handleSubmit = e => {
         const { name, number } = state;
         e.preventDefault();
@@ -30,11 +35,12 @@ const ContactForm = ({ onSubmit }) => {
           }
       }
         reset();
-        return onSubmit(name, number);
+        return handleAddContact(name, number);
     }
     const reset = () => {
       return setState({name: '', number: ''})
   }
+
 
   const { name, number } = state;
 

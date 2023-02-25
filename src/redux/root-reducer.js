@@ -1,5 +1,5 @@
 
-import rootReducer, { initialState } from './tasks/cont-slice';
+import rootReducer from './tasks/cont-slice';
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
