@@ -1,48 +1,37 @@
 import { useState } from "react";
-import PropTypes from 'prop-types';
 import { ContactFormCss, ContactLabelCss } from "./ContactForm.styled";
 import { ButtonCss } from "components/App/App.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllContacts } from "redux/tasks/cont-selectors";
-import { rootSlice } from "redux/tasks/cont-slice";
+import { useDispatch } from "react-redux";
+import { fetchAddContacts } from "redux/tasks/taskoperations";
+
 
 
 const ContactForm = () => {
-  const contacts = useSelector(getAllContacts);
   const [ state, setState ] = useState({
     name: "",
-    number: "",
+    phone: "",
   });
   const dispatch = useDispatch();
 
-  const handleAddContact = (name, number) =>
-    dispatch(rootSlice.actions.addContact({ name, number }));
+  const { name, phone } = state;
+  console.log("name", name, "number", phone)
 
 
   const handleInputChange = (e) => setState({ ...state, [e.target.name]: e.target.value });
       const handleSubmit = e => {
-        const { name, number } = state;
+
         e.preventDefault();
 
-        for (let contact of contacts) {
-        if (contact.name.toLowerCase() === name.toLowerCase()) {
-          alert(`${contact.name} is already in contacts`);
-          return;
-          }
-          if (contact.number.toLowerCase() === number.toLowerCase()) {
-            alert(`${contact.number} is already in contacts`);
-            return;
-          }
-      }
+        const payload = {
+          name: name, 
+          phone: phone,
+        }
+        dispatch(fetchAddContacts(payload))
         reset();
-        return handleAddContact(name, number);
     }
     const reset = () => {
-      return setState({name: '', number: ''})
+      return setState({name: '', phone: ''})
   }
-
-
-  const { name, number } = state;
 
   return (
     <ContactFormCss onSubmit={handleSubmit}>
@@ -64,11 +53,11 @@ const ContactForm = () => {
         Phone:{" "}
         <input
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           onChange={handleInputChange}
-          value={number}
+          value={phone}
           required
         />
       </ContactLabelCss>
@@ -76,6 +65,8 @@ const ContactForm = () => {
     </ContactFormCss>
   );
 }
+
+export default ContactForm;
 
 // class ContactForm extends Component {
 //     state = {
@@ -137,11 +128,3 @@ const ContactForm = () => {
 //         );
 //     }
 // }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-
-
-export default ContactForm;

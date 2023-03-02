@@ -17,6 +17,8 @@ const App = () => {
   );
 };
 
+export default App;
+
 
 // const LS_KEY = "contacts";
   
@@ -124,4 +126,4 @@ const App = () => {
 //   }
 // }
 
-export default App;
+

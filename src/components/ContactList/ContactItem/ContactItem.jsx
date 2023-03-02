@@ -1,17 +1,18 @@
 import { ButtonCss } from 'components/App/App.styled';
+import Spinner from 'components/Spinner';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { rootSlice } from 'redux/tasks/cont-slice';
+import { fetchdDeleteContact } from 'redux/tasks/taskoperations';
 import { ContactTextCss } from './ContactItem.styled';
 
 const ContactItem = ({ id, name, number }) => {
-    const dispatch = useDispatch();
-  const handleDeleteContact = itemId => {
-    dispatch(rootSlice.actions.deleteContact(itemId));
-  };
+  const dispatch = useDispatch();
+  
+
     return <>
     <ContactTextCss>{name}: {number}</ContactTextCss>
-    <ButtonCss type='button' onClick={() => handleDeleteContact(id)}>Delete</ButtonCss>
+    <ButtonCss type='button' onClick={() => dispatch(fetchdDeleteContact(id))}>Delete</ButtonCss>
 </>
 }
 

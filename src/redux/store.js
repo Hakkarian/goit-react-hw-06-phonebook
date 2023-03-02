@@ -2,7 +2,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import persistedReducer from './root-reducer';
 
-
 import persistStore from 'redux-persist/es/persistStore';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 

@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from 'redux/filters/filter-selectors';
-import { rootSlice } from 'redux/tasks/cont-slice';
+import { settedFilter } from 'redux/tasks/cont-slice';
 
 const Filter = () => {
     const filter = useSelector(getFilter);
     const dispatch = useDispatch();
 
-    const handleFilterChange = e =>
-        dispatch(rootSlice.actions.settedFilter(e.target.value));
+    const handleFilterChange = e => dispatch(settedFilter(e.target.value));
     
     return <label>Filter:
         <input type="text" value={filter} onChange={handleFilterChange} />
